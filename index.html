@@ -222,6 +222,40 @@
     font-weight:400;
     font-size:22px;
   }
+  /* clickable info rows (instagram / gallery) */
+  .info .row.link{text-decoration:none;cursor:pointer;transition:background .2s,padding .2s;}
+  .info .row.as-btn{width:100%;background:none;border:none;border-bottom:1px solid var(--line-soft);font-family:inherit;text-align:left;}
+  .info .row.link:hover{background:color-mix(in srgb,var(--accent) 8%,transparent);padding-left:12px;}
+  .info .row.link .v{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 45%,transparent);}
+  .info .row.link .go{font-family:var(--mono);margin-left:6px;}
+
+  /* ---------- 현장 사진 gallery modal (body-level, unscaled) ---------- */
+  .gallery-overlay{
+    position:fixed;inset:0;z-index:9999;display:none;
+    background:rgba(0,0,0,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    padding:48px;overflow:auto;
+  }
+  .gallery-overlay.open{display:block;animation:gfade .3s ease both;}
+  @keyframes gfade{from{opacity:0;}to{opacity:1;}}
+  .gallery-shell{max-width:1280px;margin:0 auto;font-family:var(--kr);color:var(--text);}
+  .gallery-top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:14px;flex-wrap:wrap;}
+  .gallery-top .gt-eyebrow{font-family:var(--mono);font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 50%,transparent);}
+  .gallery-top h3{margin:6px 0 0;font-size:42px;font-weight:700;letter-spacing:-.02em;}
+  .gallery-top h3 .hlg{color:var(--accent);text-shadow:0 0 10px var(--accent),0 0 28px color-mix(in srgb,var(--accent) 60%,transparent);}
+  .gallery-close{
+    flex:none;width:54px;height:54px;border-radius:50%;cursor:pointer;
+    background:none;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);
+    color:var(--accent);font-size:26px;line-height:1;
+    box-shadow:0 0 18px color-mix(in srgb,var(--accent) 22%,transparent);transition:background .2s;
+  }
+  .gallery-close:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);}
+  .gallery-hint{font-size:15px;color:var(--muted);margin:0 0 30px;font-family:var(--mono);letter-spacing:.04em;}
+  .gallery-group{margin-bottom:42px;}
+  .gallery-group .gg-head{display:flex;align-items:baseline;gap:16px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+  .gallery-group .gg-head .gg-t{font-size:25px;font-weight:600;letter-spacing:-.01em;}
+  .gallery-group .gg-head .gg-s{font-family:var(--mono);font-size:14px;color:var(--muted);letter-spacing:.06em;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .gallery-grid image-slot{width:100%;height:240px;border:1px solid var(--line);background:var(--surface);box-shadow:inset 0 0 30px color-mix(in srgb,var(--accent) 6%,transparent);}
 
   /* ---------- 03 TIMELINE ---------- */
   .timeline .head{margin-bottom:44px;}
@@ -426,6 +460,28 @@
   .case .meta{margin-top:20px;font-family:var(--mono);font-size:20px;letter-spacing:.04em;color:var(--muted);}
   .case .body{flex:1;display:grid;grid-template-columns:.72fr 1.28fr;gap:80px;align-items:start;}
   .metrics{display:flex;flex-direction:column;gap:30px;border-left:2px solid var(--accent);padding-left:34px;filter:drop-shadow(-2px 0 7px color-mix(in srgb,var(--accent) 42%,transparent));}
+  /* watch-production CTA button */
+  .watch-btn{display:inline-flex;align-items:center;gap:13px;margin-top:6px;align-self:flex-start;
+    font-family:var(--kr);font-size:23px;font-weight:700;letter-spacing:-.01em;text-decoration:none;
+    color:#00120E;background:var(--accent);padding:17px 30px;border-radius:999px;
+    box-shadow:0 0 28px color-mix(in srgb,var(--accent) 58%,transparent);transition:transform .15s,box-shadow .2s;}
+  .watch-btn:hover{transform:translateY(-2px);box-shadow:0 0 42px color-mix(in srgb,var(--accent) 80%,transparent);}
+  .watch-btn .pl{font-size:16px;}
+  /* subtle field-photo backdrop on a case slide */
+  .case-photo{
+    position:absolute;right:0;bottom:0;width:1180px;max-width:62%;z-index:0;pointer-events:none;
+    opacity:.16;mix-blend-mode:screen;
+    -webkit-mask-image:linear-gradient(105deg,transparent 0%,#000 46%),linear-gradient(0deg,transparent 0%,#000 38%);
+    -webkit-mask-composite:source-in;mask-image:linear-gradient(105deg,transparent 0%,#000 46%),linear-gradient(0deg,transparent 0%,#000 38%);mask-composite:intersect;
+  }
+  .case-photo.framed{
+    width:520px;max-width:none;right:120px;bottom:140px;opacity:1;mix-blend-mode:normal;border-radius:12px;
+    -webkit-mask-image:none;mask-image:none;
+    border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);
+    box-shadow:0 0 0 1px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.6),0 0 40px color-mix(in srgb,var(--accent) 20%,transparent);
+    filter:saturate(.92);
+  }
+  .case-photo.framed::after{content:"";position:absolute;inset:0;border-radius:12px;background:linear-gradient(0deg,color-mix(in srgb,var(--accent) 14%,transparent),transparent 55%);}
   .metric .mv{font-size:66px;line-height:1.06;font-weight:800;letter-spacing:-.03em;white-space:nowrap;
     color:#EAFFF9;
     text-shadow:0 0 6px var(--accent),0 0 16px var(--accent),0 0 40px color-mix(in srgb,var(--accent) 58%,transparent);}
@@ -551,13 +607,13 @@
 </style>
 </head>
 <body>
-<template id="__bundler_thumbnail" data-bg-color="#08090B">
+<template id="__bundler_thumbnail" data-bg-color="#000000">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#08090B"/>
-    <rect x="360" y="300" width="80" height="6" fill="#4FD9B6"/>
-    <text x="470" y="312" font-family="monospace" font-size="26" letter-spacing="8" fill="#4FD9B6">PORTFOLIO</text>
-    <text x="356" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#F2EFE9">조</text>
-    <text x="496" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#4FD9B6">영채</text>
+    <rect width="1200" height="800" fill="#000000"/>
+    <rect x="360" y="300" width="80" height="6" fill="#3FEFC9"/>
+    <text x="470" y="312" font-family="monospace" font-size="26" letter-spacing="8" fill="#3FEFC9">PORTFOLIO</text>
+    <text x="356" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#EAF5F2">조</text>
+    <text x="496" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#3FEFC9" style="filter:drop-shadow(0 0 18px #3FEFC9)">영채</text>
   </svg>
 </template>
 <deck-stage width="1920" height="1080">
@@ -574,10 +630,10 @@
       </div>
       <p class="tagline anim d3">다양한 환경에서 발전과 노력을 멈추지 않는 기획자 — 학생 자치, 대규모 행사 운영, 데이터 기반 콘텐츠 마케팅까지.</p>
       <span class="neon-ring cv-ring anim d3" aria-hidden="true"></span>
-      <i class="spark" style="top:150px;left:84px;width:32px;height:32px;"></i>
+      <i class="spark" style="top:160px;left:84px;width:32px;height:32px;"></i>
       <i class="spark" style="top:172px;right:330px;width:20px;height:20px;"></i>
       <i class="spark" style="bottom:178px;left:150px;width:24px;height:24px;"></i>
-      <div class="idx"><b>01</b> / 10</div>
+      <div class="idx"><b>01</b> / 12</div>
     </div>
   </section>
 
@@ -606,11 +662,12 @@
           <div class="row"><span class="k">Phone</span><span class="v">010-7375-1819</span></div>
           <div class="row"><span class="k">Email</span><span class="v">rockdae365@gmail.com</span></div>
           <div class="row"><span class="k">Lang</span><span class="v">한국어 · 日本語 <small>JLPT N2</small></span></div>
+          <a class="row link" href="https://www.instagram.com" target="_blank" rel="noopener"><span class="k">Insta</span><span class="v">@_mxrcury__ <span class="go">↗</span></span></a>
         </div>
       </div>
       <i class="spark" style="top:160px;right:120px;width:26px;height:26px;"></i>
       <i class="spark" style="bottom:230px;right:300px;width:16px;height:16px;"></i>
-      <div class="idx"><b>02</b> / 10</div>
+      <div class="idx"><b>02</b> / 12</div>
     </div>
   </section>
 
@@ -644,7 +701,7 @@
       </div>
       <i class="spark" style="bottom:150px;right:150px;width:28px;height:28px;"></i>
       <i class="spark" style="bottom:300px;right:380px;width:15px;height:15px;"></i>
-      <div class="idx"><b>03</b> / 10</div>
+      <div class="idx"><b>03</b> / 12</div>
     </div>
   </section>
 
@@ -693,15 +750,60 @@
         </div>
       </div>
       <i class="spark" style="top:154px;right:128px;width:24px;height:24px;"></i>
-      <div class="idx"><b>04</b> / 10</div>
+      <div class="idx"><b>04</b> / 12</div>
     </div>
   </section>
 
-  <!-- 05 · PILLAR 01 -->
+  <!-- 05 · PILLAR 01 · AI -->
   <section data-label="Pillar 01">
     <div class="frame divider" data-screen-label="05 Pillar 01">
       <div class="pillnum">01</div>
       <div class="eyebrow anim">What I bring · 01</div>
+      <div class="motif anim d1">변화를 먼저 받아들이는</div>
+      <h2 class="anim d2"><span class="hl">AI 활용</span> 능력</h2>
+      <div class="uses anim d3">
+        <span class="chip">Claude 활용 콘텐츠 기획·제작</span>
+        <span class="chip">AI 워크플로우 기반 영상 제작</span>
+      </div>
+      <i class="spark" style="bottom:300px;right:240px;width:36px;height:36px;"></i>
+      <i class="spark" style="bottom:460px;right:540px;width:18px;height:18px;"></i>
+      <i class="spark" style="top:200px;right:170px;width:22px;height:22px;"></i>
+      <div class="idx"><b>05</b> / 12</div>
+    </div>
+  </section>
+
+  <!-- 06 · CASE · AI VIDEO -->
+  <section data-label="AI Video">
+    <div class="frame case" data-screen-label="06 AI Video">
+      <div class="ctop">
+        <div class="eyebrow anim">Case · AI 영상 제작</div>
+        <h2 class="anim d1">AI로 기획·완성한 <span class="hl">영상 콘텐츠</span></h2>
+        <div class="meta anim d1">Claude 활용 영상 제작 · 기획부터 편집까지 전 과정 주도</div>
+      </div>
+      <div class="body">
+        <div class="metrics anim d2">
+          <div class="metric"><div class="mv">100%</div><div class="ml">기획·제작 기여도</div></div>
+          <div class="metric"><div class="mv">Claude</div><div class="ml">핵심 활용 도구</div></div>
+          <a class="watch-btn" href="https://drive.google.com/file/d/1RY57VbkBLgx-ldpIPAK0snsbMkLCxamv/view?usp=sharing" target="_blank" rel="noopener"><span class="pl">▶</span> 제작물 보기 ↗</a>
+        </div>
+        <div class="rcsr anim d3">
+          <div class="blk"><div class="blk-k">Tool</div><div class="blk-v">Claude를 활용해 영상의 <span class="em">콘셉·스크립트·구성</span>을 기획</div></div>
+          <div class="blk"><div class="blk-k">Process</div><div class="blk-v">AI 활용 워크플로우로 <span class="em">기획부터 편집까지 전 과정</span>을 단독 주도</div></div>
+          <div class="blk"><div class="blk-k">Why AI</div><div class="blk-v">새로운 도구를 빠르게 흡수해 <span class="em">제작 속도와 완성도</span>를 동시에 강화</div></div>
+          <div class="blk"><div class="blk-k">Output</div><div class="blk-v">AI 활용 영상 1편 완성 — <span class="mute">왼쪽 버튼에서 실제 제작물을 확인할 수 있습니다</span></div></div>
+        </div>
+      </div>
+      <i class="spark" style="top:152px;right:132px;width:20px;height:20px;"></i>
+      <i class="spark" style="bottom:180px;right:230px;width:16px;height:16px;"></i>
+      <div class="idx"><b>06</b> / 12</div>
+    </div>
+  </section>
+
+  <!-- 07 · PILLAR 02 -->
+  <section data-label="Pillar 02">
+    <div class="frame divider" data-screen-label="07 Pillar 02">
+      <div class="pillnum">02</div>
+      <div class="eyebrow anim">What I bring · 02</div>
       <div class="motif anim d1">발전을 멈추지 않는</div>
       <h2 class="anim d2">기획 및 <span class="hl">현장 운영</span> 능력</h2>
       <div class="uses anim d3">
@@ -711,13 +813,13 @@
       <i class="spark" style="bottom:300px;right:240px;width:36px;height:36px;"></i>
       <i class="spark" style="bottom:460px;right:540px;width:18px;height:18px;"></i>
       <i class="spark" style="top:200px;right:170px;width:22px;height:22px;"></i>
-      <div class="idx"><b>05</b> / 10</div>
+      <div class="idx"><b>07</b> / 12</div>
     </div>
   </section>
 
-  <!-- 06 · CASE 01 -->
+  <!-- 08 · CASE 01 -->
   <section data-label="Case 01">
-    <div class="frame case" data-screen-label="06 Case 01">
+    <div class="frame case" data-screen-label="08 Case 01">
       <div class="ctop">
         <div class="eyebrow anim">Case 01 · 행사 기획·운영</div>
         <h2 class="anim d1">5,000명의 니즈를 <span class="hl">현실로</span></h2>
@@ -737,13 +839,13 @@
         </div>
       </div>
       <i class="spark" style="top:152px;right:132px;width:20px;height:20px;"></i>
-      <div class="idx"><b>06</b> / 10</div>
+      <div class="idx"><b>08</b> / 12</div>
     </div>
   </section>
 
-  <!-- 07 · CASE 02 -->
+  <!-- 09 · CASE 02 -->
   <section data-label="Case 02">
-    <div class="frame case" data-screen-label="07 Case 02">
+    <div class="frame case" data-screen-label="09 Case 02">
       <div class="ctop">
         <div class="eyebrow anim">Case 02 · 공간 기획·운영</div>
         <h2 class="anim d1">축제의 중심이 된 <span class="hl">부스 기획</span></h2>
@@ -763,15 +865,15 @@
       </div>
       <i class="spark" style="bottom:168px;left:170px;width:24px;height:24px;"></i>
       <i class="spark" style="top:152px;right:132px;width:18px;height:18px;"></i>
-      <div class="idx"><b>07</b> / 10</div>
+      <div class="idx"><b>09</b> / 12</div>
     </div>
   </section>
 
-  <!-- 08 · PILLAR 02 -->
-  <section data-label="Pillar 02">
-    <div class="frame divider" data-screen-label="08 Pillar 02">
-      <div class="pillnum">02</div>
-      <div class="eyebrow anim">What I bring · 02</div>
+  <!-- 10 · PILLAR 03 -->
+  <section data-label="Pillar 03">
+    <div class="frame divider" data-screen-label="10 Pillar 03">
+      <div class="pillnum">03</div>
+      <div class="eyebrow anim">What I bring · 03</div>
       <div class="motif anim d1">노력을 멈추지 않는</div>
       <h2 class="anim d2"><span class="hl">데이터 분석</span> 및 마케팅 능력</h2>
       <div class="uses anim d3">
@@ -780,13 +882,13 @@
       <i class="spark" style="bottom:300px;right:240px;width:36px;height:36px;"></i>
       <i class="spark" style="bottom:460px;right:540px;width:18px;height:18px;"></i>
       <i class="spark" style="top:200px;right:170px;width:22px;height:22px;"></i>
-      <div class="idx"><b>08</b> / 10</div>
+      <div class="idx"><b>10</b> / 12</div>
     </div>
   </section>
 
-  <!-- 09 · CASE 03 -->
+  <!-- 11 · CASE 03 -->
   <section data-label="Case 03">
-    <div class="frame case" data-screen-label="09 Case 03">
+    <div class="frame case" data-screen-label="11 Case 03">
       <div class="ctop">
         <div class="eyebrow anim">Case 03 · 데이터 · 콘텐츠 마케팅</div>
         <h2 class="anim d1">데이터로 증명한 <span class="hl">타겟 마케팅</span></h2>
@@ -806,13 +908,13 @@
         </div>
       </div>
       <i class="spark" style="top:152px;right:132px;width:20px;height:20px;"></i>
-      <div class="idx"><b>09</b> / 10</div>
+      <div class="idx"><b>11</b> / 12</div>
     </div>
   </section>
 
-  <!-- 10 · CLOSING -->
+  <!-- 12 · CLOSING -->
   <section data-label="Closing">
-    <div class="frame closing" data-screen-label="10 Closing">
+    <div class="frame closing" data-screen-label="12 Closing">
       <div class="eyebrow anim">Outro</div>
       <p class="quote anim d1">“ 관성을 깨는 <span class="hl">호기심</span>,<br>현장을 완성하는 <span class="hl">집요함</span> ”</p>
       <p class="qsub anim d2">새로움을 발견해 내는 호기심으로, <em>브랜드의 목소리를 가장 입체적인 공간의 경험으로 완성하는 기획자</em>가 되겠습니다.</p>
@@ -825,7 +927,7 @@
       <i class="spark" style="top:340px;right:300px;width:18px;height:18px;"></i>
       <i class="spark" style="bottom:300px;right:560px;width:22px;height:22px;"></i>
       <div class="footline">조영채 · Portfolio 2026</div>
-      <div class="idx"><b>10</b> / 10</div>
+      <div class="idx"><b>12</b> / 12</div>
     </div>
   </section>
 
