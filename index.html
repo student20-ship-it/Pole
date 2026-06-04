@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>조영채 · 포트폴리오</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --surface:#0C1311;
+    --surface-2:#0F1815;
+    --line:#1E2A27;
+    --line-soft:#131C19;
+    --text:#EAF5F2;
+    --muted:#7E8C88;
+    --muted-2:#48544F;
+    --accent:#3FEFC9;
+    --accent-soft:rgba(63,239,201,.16);
+
+    --kr:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+    --mono:"JetBrains Mono","Pretendard Variable",Pretendard,ui-monospace,monospace;
+
+    /* layout */
+    --pad-x:120px;
+    --pad-y:96px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  deck-stage:not(:defined){visibility:hidden;}
+  deck-stage{background:var(--bg);}
+
+  section{
+    font-family:var(--kr);
+    color:var(--text);
+    background:var(--bg);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    word-break:keep-all;
+    position:relative;
+  }
+  /* dotted neon texture + ambient glow behind each slide */
+  section::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(circle at 50% 50%, color-mix(in srgb,var(--accent) 17%,transparent) .8px, transparent 1.7px),
+      radial-gradient(58% 68% at 88% 6%, color-mix(in srgb,var(--accent) 15%,transparent), transparent 60%),
+      radial-gradient(52% 60% at 3% 100%, color-mix(in srgb,var(--accent) 9%,transparent), transparent 58%);
+    background-size:46px 46px, 100% 100%, 100% 100%;
+  }
+  /* faint vertical guide line */
+  section::after{
+    content:"";position:absolute;top:0;bottom:0;left:calc(var(--pad-x) - 42px);width:1px;z-index:0;
+    background:linear-gradient(color-mix(in srgb,var(--accent) 22%,transparent),transparent 72%);pointer-events:none;
+  }
+
+  /* ---------- shared atoms ---------- */
+  .frame{
+    position:absolute;
+    inset:0;
+    padding:var(--pad-y) var(--pad-x);
+    display:flex;
+    flex-direction:column;
+    z-index:2;
+  }
+  /* corner plus-mark, drawn with two hairlines */
+  .frame::after{
+    content:"";position:absolute;top:54px;right:54px;width:20px;height:20px;z-index:3;opacity:.8;pointer-events:none;
+    background:
+      linear-gradient(var(--accent),var(--accent)) center/1.4px 100% no-repeat,
+      linear-gradient(var(--accent),var(--accent)) center/100% 1.4px no-repeat;
+    filter:drop-shadow(0 0 5px var(--accent));
+  }
+  .divider::after{display:none;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:19px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    text-shadow:0 0 14px color-mix(in srgb,var(--accent) 55%,transparent);
+  }
+  .eyebrow::before{
+    content:"";
+    width:46px;height:1px;
+    background:var(--accent);
+    display:inline-block;
+    box-shadow:0 0 8px var(--accent);
+  }
+  .idx{
+    position:absolute;
+    bottom:var(--pad-y);
+    right:var(--pad-x);
+    font-family:var(--mono);
+    font-size:16px;
+    letter-spacing:.2em;
+    color:var(--muted-2);
+  }
+  .idx b{color:var(--text);font-weight:500;}
+  .footline{
+    position:absolute;
+    bottom:var(--pad-y);
+    left:var(--pad-x);
+    font-family:var(--mono);
+    font-size:16px;
+    letter-spacing:.18em;
+    color:var(--muted);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* ---------- 01 COVER ---------- */
+  .cover{justify-content:center;}
+  .cover .eyebrow{margin-bottom:60px;}
+  .cover .statement{
+    margin:0;
+    font-size:116px;
+    line-height:1.16;
+    letter-spacing:-.025em;
+    font-weight:700;
+    max-width:1320px;
+    text-wrap:balance;
+  }
+  .cover .statement .hl{
+    color:#EAFFF9;
+    text-shadow:0 0 7px var(--accent),0 0 18px var(--accent),0 0 42px color-mix(in srgb,var(--accent) 75%,transparent),0 0 78px color-mix(in srgb,var(--accent) 52%,transparent);
+  }
+  .cover .role{
+    margin-top:54px;
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+    white-space:nowrap;
+    gap:20px;
+    font-family:var(--mono);
+    font-size:22px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--muted);
+  }
+  .cover .role .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .cover .tagline{
+    margin-top:40px;
+    max-width:1040px;
+    font-size:30px;
+    line-height:1.55;
+    color:var(--muted);
+    font-weight:400;
+    text-wrap:pretty;
+  }
+  .cover .tagline em{color:var(--text);font-style:normal;font-weight:600;}
+
+  /* ---------- section heading block ---------- */
+  .head{margin-bottom:64px;}
+  .head .eyebrow{margin-bottom:30px;}
+  .head h2{
+    margin:0;
+    font-size:84px;
+    line-height:1.02;
+    letter-spacing:-.02em;
+    font-weight:700;
+  }
+  .head h2 .thin{color:var(--muted);font-weight:300;}
+
+  /* ---------- 02 ABOUT ---------- */
+  .about .body{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:90px;
+    flex:1;
+    align-items:start;
+  }
+  .about .lead{
+    font-size:46px;
+    line-height:1.4;
+    letter-spacing:-.015em;
+    font-weight:500;
+    text-wrap:pretty;
+  }
+  .about .lead .accent{color:var(--accent);}
+  .about .lead .muted{color:var(--muted);}
+  .info{
+    border-top:1px solid var(--line);
+  }
+  .info .row{
+    display:flex;
+    align-items:baseline;
+    gap:28px;
+    padding:22px 4px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .info .row .k{
+    font-family:var(--mono);
+    font-size:15px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    width:130px;
+    flex:none;
+  }
+  .info .row .v{
+    font-size:27px;
+    font-weight:500;
+    color:var(--text);
+  }
+  .info .row .v{display:flex;align-items:baseline;gap:10px;white-space:nowrap;}
+  .info .row .v small{
+    color:var(--muted);
+    font-weight:400;
+    font-size:22px;
+  }
+
+  /* ---------- 03 TIMELINE ---------- */
+  .timeline .head{margin-bottom:44px;}
+  .timeline .body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;padding-bottom:48px;}
+  .tl-row{
+    display:grid;
+    grid-template-columns:172px 1fr auto;
+    align-items:center;
+    gap:38px;
+    padding:13px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+  }
+  .tl-row:last-child{border-bottom:1px solid var(--line-soft);}
+  .tl-row .num{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--muted-2);
+    letter-spacing:.04em;
+    white-space:nowrap;
+  }
+  .tl-row .main{display:flex;flex-direction:column;gap:5px;}
+  .tl-row .main .org{
+    font-size:17px;
+    color:var(--accent);
+    font-weight:500;
+    font-family:var(--mono);
+    letter-spacing:.04em;
+  }
+  .tl-row .main .title{
+    font-size:30px;
+    font-weight:600;
+    letter-spacing:-.01em;
+  }
+  .tl-row .tag{
+    font-family:var(--mono);
+    font-size:15px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:color-mix(in srgb,var(--accent) 82%,#ffffff);
+    border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);
+    border-radius:999px;
+    padding:9px 18px;
+    white-space:nowrap;
+    background:color-mix(in srgb,var(--accent) 7%,transparent);
+  }
+  .tl-row .tag.now{
+    color:#00120E;
+    background:var(--accent);
+    border-color:var(--accent);
+    font-weight:600;
+    box-shadow:0 0 20px color-mix(in srgb,var(--accent) 60%,transparent);
+  }
+
+  /* ---------- 04 HIGHLIGHTS ---------- */
+  .hl .body{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:stretch;}
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:48px 42px;
+    display:flex;
+    flex-direction:column;
+  }
+  .card .ctag{
+    font-family:var(--mono);
+    font-size:14px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+  }
+  .card .stat{
+    margin-top:auto;
+    font-size:78px;
+    line-height:1;
+    font-weight:800;
+    letter-spacing:-.03em;
+    color:var(--accent);
+    display:flex;
+    align-items:baseline;
+    white-space:nowrap;
+  }
+  .card .stat .u{font-size:30px;font-weight:600;color:var(--text);margin-left:8px;letter-spacing:0;}
+  .card .desc{
+    margin-top:26px;
+    font-size:24px;
+    line-height:1.5;
+    font-weight:500;
+    color:var(--text);
+    text-wrap:pretty;
+  }
+  .card .sub{
+    margin-top:14px;
+    font-size:18px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+
+  /* ---------- 05 CONTACT ---------- */
+  .contact{justify-content:center;}
+  .contact .eyebrow{margin-bottom:48px;}
+  .contact h2{
+    margin:0;
+    font-size:120px;
+    line-height:.98;
+    letter-spacing:-.025em;
+    font-weight:800;
+  }
+  .contact h2 .thin{color:var(--muted);font-weight:300;}
+  .contact .links{
+    margin-top:80px;
+    display:flex;
+    flex-direction:column;
+  }
+  .contact .lk{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    padding:30px 4px;
+    border-top:1px solid var(--line);
+    text-decoration:none;
+    color:var(--text);
+  }
+  .contact .lk:last-child{border-bottom:1px solid var(--line);}
+  .contact .lk .lbl{
+    font-family:var(--mono);
+    font-size:16px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    width:170px;
+    flex:none;
+  }
+  .contact .lk .val{
+    font-size:40px;
+    font-weight:500;
+    letter-spacing:-.01em;
+  }
+  .contact .lk .arr{
+    margin-left:auto;
+    font-family:var(--mono);
+    color:var(--accent);
+    font-size:30px;
+  }
+
+  /* ---------- PROFILE education block ---------- */
+  .edu{margin-top:38px;display:flex;flex-direction:column;gap:18px;}
+  .edu .erow{display:flex;align-items:baseline;gap:20px;}
+  .edu .erow .yr{font-family:var(--mono);font-size:15px;color:var(--muted-2);letter-spacing:.06em;width:150px;flex:none;}
+  .edu .erow .sch{font-size:25px;font-weight:600;}
+  .edu .erow .sch small{display:block;font-size:17px;font-weight:400;color:var(--muted);margin-top:4px;}
+
+  /* ---------- SKILLS ---------- */
+  .skills .body{flex:1;display:grid;grid-template-columns:1.05fr .95fr;gap:96px;align-items:start;}
+  .col-label{
+    font-family:var(--mono);font-size:15px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:34px;display:flex;align-items:center;gap:14px;
+  }
+  .col-label::before{content:"";width:30px;height:1px;background:var(--accent);}
+  .skill-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid var(--line-soft);}
+  .skill-row .nm{font-size:28px;font-weight:500;}
+  .dots{display:flex;gap:9px;}
+  .dots i{width:13px;height:13px;border-radius:50%;background:var(--line);display:inline-block;}
+  .dots i.on{background:var(--accent);box-shadow:0 0 9px color-mix(in srgb,var(--accent) 75%,transparent);}
+  .cert-list{display:flex;flex-direction:column;}
+  .cert-list .crow{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid var(--line-soft);}
+  .cert-list .crow .cn{font-size:25px;font-weight:500;}
+  .cert-list .crow .cg{font-family:var(--mono);font-size:16px;color:var(--accent);letter-spacing:.04em;white-space:nowrap;text-shadow:0 0 12px color-mix(in srgb,var(--accent) 50%,transparent);}
+
+  /* ---------- SECTION DIVIDER ---------- */
+  .divider{justify-content:center;}
+  .divider .eyebrow{margin-bottom:42px;}
+  .divider .pillnum{
+    position:absolute;top:calc(var(--pad-y) - 24px);right:var(--pad-x);
+    font-family:var(--mono);font-size:300px;line-height:.8;font-weight:700;
+    letter-spacing:-.04em;user-select:none;z-index:0;
+    color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--accent) 60%,transparent);
+    text-shadow:0 0 46px color-mix(in srgb,var(--accent) 28%,transparent);
+  }
+  .divider .motif{font-size:37px;font-weight:500;color:var(--muted);letter-spacing:-.01em;margin-bottom:14px;}
+  .divider h2{margin:0;font-size:116px;line-height:1.04;letter-spacing:-.03em;font-weight:700;}
+  .divider h2 .hl{
+    color:#EAFFF9;
+    text-shadow:0 0 7px var(--accent),0 0 18px var(--accent),0 0 42px color-mix(in srgb,var(--accent) 75%,transparent),0 0 78px color-mix(in srgb,var(--accent) 52%,transparent);
+  }
+  .divider .uses{margin-top:54px;display:flex;flex-wrap:wrap;gap:14px;max-width:1200px;}
+  .divider .uses .chip{
+    font-size:22px;font-weight:500;color:var(--text);white-space:nowrap;flex:none;
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:999px;padding:13px 26px;
+    background:color-mix(in srgb,var(--accent) 6%,transparent);
+    box-shadow:inset 0 0 22px color-mix(in srgb,var(--accent) 9%,transparent);
+  }
+
+  /* ---------- CASE STUDY ---------- */
+  .case .ctop{margin-bottom:42px;}
+  .case .eyebrow{margin-bottom:26px;}
+  .case h2{margin:0;font-size:80px;line-height:1.06;letter-spacing:-.025em;font-weight:700;max-width:1500px;}
+  .case h2 .hl{
+    color:#EAFFF9;
+    text-shadow:0 0 6px var(--accent),0 0 16px var(--accent),0 0 38px color-mix(in srgb,var(--accent) 72%,transparent),0 0 66px color-mix(in srgb,var(--accent) 48%,transparent);
+  }
+  .case .meta{margin-top:20px;font-family:var(--mono);font-size:20px;letter-spacing:.04em;color:var(--muted);}
+  .case .body{flex:1;display:grid;grid-template-columns:.72fr 1.28fr;gap:80px;align-items:start;}
+  .metrics{display:flex;flex-direction:column;gap:30px;border-left:2px solid var(--accent);padding-left:34px;filter:drop-shadow(-2px 0 7px color-mix(in srgb,var(--accent) 42%,transparent));}
+  .metric .mv{font-size:66px;line-height:1.06;font-weight:800;letter-spacing:-.03em;white-space:nowrap;
+    color:#EAFFF9;
+    text-shadow:0 0 6px var(--accent),0 0 16px var(--accent),0 0 40px color-mix(in srgb,var(--accent) 58%,transparent);}
+  .metric .ml{margin-top:10px;font-size:22px;color:var(--muted);font-weight:500;}
+  .rcsr{display:grid;grid-template-columns:1fr 1fr;gap:34px 56px;}
+  .rcsr.stack{grid-template-columns:1fr;}
+  .blk .blk-k{font-family:var(--mono);font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:13px;}
+  .blk .blk-v{font-size:25px;line-height:1.52;font-weight:400;color:var(--text);text-wrap:pretty;}
+  .blk .blk-v .em{color:var(--text);font-weight:600;}
+  .blk .blk-v .mute{color:var(--muted);}
+
+  /* ---------- CLOSING quote ---------- */
+  .closing{justify-content:center;}
+  .closing .quote{font-size:96px;line-height:1.2;letter-spacing:-.025em;font-weight:700;max-width:1500px;text-wrap:balance;}
+  .closing .quote .hl{
+    color:#EAFFF9;
+    text-shadow:0 0 7px var(--accent),0 0 18px var(--accent),0 0 42px color-mix(in srgb,var(--accent) 75%,transparent),0 0 78px color-mix(in srgb,var(--accent) 52%,transparent);
+  }
+  .closing .qsub{margin-top:50px;max-width:1080px;font-size:29px;line-height:1.6;color:var(--muted);text-wrap:pretty;}
+  .closing .qsub em{color:var(--text);font-style:normal;font-weight:600;}
+  .closing .cc{margin-top:64px;display:flex;flex-wrap:wrap;gap:18px 40px;align-items:center;}
+  .closing .cc a{color:var(--text);text-decoration:none;font-size:24px;font-weight:500;display:flex;align-items:center;gap:14px;}
+  .closing .cc a .ico{font-family:var(--mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
+
+  /* ---------- glass imagery ---------- */
+  .gimg{position:absolute;pointer-events:none;
+    filter:drop-shadow(0 26px 64px color-mix(in srgb,var(--accent) 16%,transparent));}
+  .gimg.front{z-index:1;}
+  .gimg.back{z-index:-1;}
+  .cover-hero{right:-40px;top:50%;transform:translateY(-50%);width:780px;opacity:.46;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%);}
+  .cover .dash{position:absolute;right:158px;top:150px;width:58px;height:58px;z-index:1;
+    border:1.5px dashed color-mix(in srgb,var(--accent) 58%,transparent);transform:rotate(8deg);}
+  .pillar-vis{right:96px;top:50%;transform:translateY(-50%);width:540px;opacity:.95;}
+  .close-vis{right:0;top:50%;transform:translateY(-50%);width:720px;opacity:.5;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 42%);mask-image:linear-gradient(90deg,transparent,#000 42%);}
+  .closing .ring{position:absolute;right:-150px;bottom:-210px;width:560px;height:560px;border-radius:50%;
+    border:1px solid var(--line);z-index:-1;}
+  .closing .ring::after{content:"";position:absolute;inset:72px;border-radius:50%;
+    border:1px dashed color-mix(in srgb,var(--accent) 24%,transparent);}
+  .skills-vis{right:64px;bottom:78px;width:360px;opacity:.3;}
+  .acts-vis{right:70px;top:50%;transform:translateY(-50%);width:250px;opacity:.2;}
+  .major-icons{margin-top:38px;display:flex;gap:48px;}
+  .major-icons .mi{display:flex;align-items:center;gap:16px;}
+  .major-icons img{width:76px;height:76px;object-fit:contain;
+    filter:drop-shadow(0 10px 24px color-mix(in srgb,var(--accent) 18%,transparent));}
+  .major-icons b{display:block;font-size:25px;font-weight:600;letter-spacing:-.01em;}
+  .major-icons small{display:block;font-size:14px;color:var(--muted);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;}
+  .metrics .case-ic{width:108px;height:108px;object-fit:contain;align-self:flex-start;margin-bottom:6px;
+    filter:drop-shadow(0 14px 34px color-mix(in srgb,var(--accent) 22%,transparent));}
+
+  /* ---------- neon decorative ---------- */
+  .neon-ring{position:absolute;border-radius:50%;z-index:-1;pointer-events:none;
+    border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);
+    box-shadow:0 0 34px color-mix(in srgb,var(--accent) 22%,transparent), inset 0 0 50px color-mix(in srgb,var(--accent) 9%,transparent);}
+  .neon-ring::after{content:"";position:absolute;inset:17%;border-radius:50%;
+    border:1px dashed color-mix(in srgb,var(--accent) 30%,transparent);}
+  .cv-ring{right:-150px;top:50%;transform:translateY(-50%);width:600px;height:600px;}
+  .cl-ring{right:-150px;bottom:-200px;width:560px;height:560px;}
+  .majors{margin-top:42px;display:flex;gap:18px;}
+  .majors .major{display:flex;flex-direction:column;gap:5px;padding:18px 30px;border-radius:14px;
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    background:color-mix(in srgb,var(--accent) 6%,transparent);
+    box-shadow:inset 0 0 26px color-mix(in srgb,var(--accent) 8%,transparent);}
+  .majors .major b{font-size:26px;font-weight:600;color:var(--text);letter-spacing:-.01em;}
+  .majors .major small{font-size:14px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;
+    color:color-mix(in srgb,var(--accent) 82%,#ffffff);text-shadow:0 0 10px color-mix(in srgb,var(--accent) 45%,transparent);}
+
+  /* ---------- entrance ---------- */
+  @media (prefers-reduced-motion:no-preference){
+    [data-deck-active] .anim{
+      animation:rise .62s cubic-bezier(.2,.7,.2,1) both;
+    }
+    [data-deck-active] .anim.d1{animation-delay:.06s;}
+    [data-deck-active] .anim.d2{animation-delay:.14s;}
+    [data-deck-active] .anim.d3{animation-delay:.22s;}
+    [data-deck-active] .anim.d4{animation-delay:.30s;}
+    [data-deck-active] .anim.d5{animation-delay:.38s;}
+    [data-deck-active] .anim.d6{animation-delay:.46s;}
+    [data-deck-active] .anim.d7{animation-delay:.54s;}
+    @keyframes rise{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+  }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#08090B">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#08090B"/>
+    <rect x="360" y="300" width="80" height="6" fill="#4FD9B6"/>
+    <text x="470" y="312" font-family="monospace" font-size="26" letter-spacing="8" fill="#4FD9B6">PORTFOLIO</text>
+    <text x="356" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#F2EFE9">조</text>
+    <text x="496" y="470" font-family="Pretendard, sans-serif" font-size="150" font-weight="800" fill="#4FD9B6">영채</text>
+  </svg>
+</template>
+<deck-stage width="1920" height="1080">
+
+  <!-- 01 · COVER -->
+  <section data-label="Cover">
+    <div class="frame cover" data-screen-label="01 Cover">
+      <div class="eyebrow anim">Portfolio · 2026</div>
+      <h1 class="statement anim d1">기획과 실행을 모두 경험한<br><span class="hl">광고 기획자 조영채</span>입니다.</h1>
+      <div class="role anim d2">
+        <span>Advertising Planner</span>
+        <span class="dot"></span>
+        <span>기획 · 현장 운영 · 콘텐츠 마케팅</span>
+      </div>
+      <p class="tagline anim d3">다양한 환경에서 발전과 노력을 멈추지 않는 기획자 — 학생 자치, 대규모 행사 운영, 데이터 기반 콘텐츠 마케팅까지.</p>
+      <span class="neon-ring cv-ring anim d3" aria-hidden="true"></span>
+      <div class="idx"><b>01</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 02 · PROFILE -->
+  <section data-label="Profile">
+    <div class="frame about" data-screen-label="02 Profile">
+      <div class="head">
+        <div class="eyebrow anim">Profile</div>
+        <h2 class="anim d1">소개 <span class="thin">/ About</span></h2>
+      </div>
+      <div class="body">
+        <div>
+          <p class="lead anim d2">현장의 <span class="accent">디테일</span>과 데이터의 <span class="accent">근거</span> 사이를 오가며 기획합니다. <span class="muted">관성을 깨는 호기심으로 문제를 발견하고, 집요한 실행으로 현장을 완성합니다.</span></p>
+          <div class="edu anim d3">
+            <div class="erow"><span class="yr">2021.03 – 2026.02</span><span class="sch">세종대학교 <small>역사학과 · 외식경영학과 복수전공</small></span></div>
+            <div class="erow"><span class="yr">2018.03 – 2021.02</span><span class="sch">창원명곡고등학교 <small>졸업</small></span></div>
+          </div>
+          <div class="majors anim d4">
+            <span class="major"><b>역사학</b><small>주전공 · Major</small></span>
+            <span class="major"><b>외식경영학</b><small>복수전공 · Double</small></span>
+          </div>
+        </div>
+        <div class="info anim d4">
+          <div class="row"><span class="k">Name</span><span class="v">조영채 <small>JO YEONG CHAE</small></span></div>
+          <div class="row"><span class="k">Birth</span><span class="v">2002. 09. 07</span></div>
+          <div class="row"><span class="k">Phone</span><span class="v">010-7375-1819</span></div>
+          <div class="row"><span class="k">Email</span><span class="v">rockdae365@gmail.com</span></div>
+          <div class="row"><span class="k">Lang</span><span class="v">한국어 · 日本語 <small>JLPT N2</small></span></div>
+        </div>
+      </div>
+      <div class="idx"><b>02</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 03 · SKILLS -->
+  <section data-label="Skills">
+    <div class="frame skills" data-screen-label="03 Skills">
+      <div class="head">
+        <div class="eyebrow anim">Skills &amp; Certificate</div>
+        <h2 class="anim d1">역량 <span class="thin">/ Toolkit</span></h2>
+      </div>
+      <div class="body">
+        <div class="anim d2">
+          <div class="col-label">Tools</div>
+          <div class="skill-row"><span class="nm">MS Office</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="skill-row"><span class="nm">Google Workspace</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="skill-row"><span class="nm">Notion</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
+          <div class="skill-row"><span class="nm">Figma</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+          <div class="skill-row"><span class="nm">Adobe Illustrator</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+          <div class="skill-row"><span class="nm">Adobe Premiere Pro</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+        </div>
+        <div class="anim d3">
+          <div class="col-label">Certificate &amp; Language</div>
+          <div class="cert-list">
+            <div class="crow"><span class="cn">일본어능력시험</span><span class="cg">JLPT N2</span></div>
+            <div class="crow"><span class="cn">OPIc</span><span class="cg">IM1</span></div>
+            <div class="crow"><span class="cn">TOEIC</span><span class="cg">625</span></div>
+            <div class="crow"><span class="cn">컴퓨터활용능력</span><span class="cg">2급</span></div>
+            <div class="crow"><span class="cn">운전면허</span><span class="cg">2종 보통</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="idx"><b>03</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 04 · ACTIVITIES -->
+  <section data-label="Activities">
+    <div class="frame timeline" data-screen-label="04 Activities">
+      <div class="head">
+        <div class="eyebrow anim">Activities</div>
+        <h2 class="anim d1">활동 &amp; 경험 <span class="thin">/ Journey</span></h2>
+      </div>
+      <div class="body">
+        <div class="tl-row anim d2">
+          <span class="num">2025.07 – 09</span>
+          <div class="main"><span class="org">세종대학교 총학생회 · 교육국</span><span class="title">전공직무박람회 총괄</span></div>
+          <span class="tag now">대표 성과</span>
+        </div>
+        <div class="tl-row anim d2">
+          <span class="num">2025.02 – 05</span>
+          <div class="main"><span class="org">세종대학교 봄축제 &lt;세종연회&gt;</span><span class="title">부스기획팀장</span></div>
+          <span class="tag">부스 기획</span>
+        </div>
+        <div class="tl-row anim d3">
+          <span class="num">2025.01 – 12</span>
+          <div class="main"><span class="org">세종대학교 총학생회</span><span class="title">대학교육국장</span></div>
+          <span class="tag">학생 자치</span>
+        </div>
+        <div class="tl-row anim d4">
+          <span class="num">2025.01 – 03</span>
+          <div class="main"><span class="org">오래오랩 (OraeLab)</span><span class="title">서포터즈 6기 · 마케팅 에디터</span></div>
+          <span class="tag">콘텐츠 마케팅</span>
+        </div>
+        <div class="tl-row anim d5">
+          <span class="num">2024.03 – 08</span>
+          <div class="main"><span class="org">세종대학교 · Exchange Japan</span><span class="title">일본 아웃바운드 교환학생</span></div>
+          <span class="tag">글로벌</span>
+        </div>
+        <div class="tl-row anim d6">
+          <span class="num">2023.07 – 10</span>
+          <div class="main"><span class="org">세종대학교</span><span class="title">제1회 세종제전 TF팀</span></div>
+          <span class="tag">행사 TF</span>
+        </div>
+        <div class="tl-row anim d7">
+          <span class="num">2022.01 – 06</span>
+          <div class="main"><span class="org">세종대학교 글로벌버디 17기</span><span class="title">회장</span></div>
+          <span class="tag">리더십</span>
+        </div>
+      </div>
+      <div class="idx"><b>04</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 05 · PILLAR 01 -->
+  <section data-label="Pillar 01">
+    <div class="frame divider" data-screen-label="05 Pillar 01">
+      <div class="pillnum">01</div>
+      <div class="eyebrow anim">What I bring · 01</div>
+      <div class="motif anim d1">발전을 멈추지 않는</div>
+      <h2 class="anim d2">기획 및 <span class="hl">현장 운영</span> 능력</h2>
+      <div class="uses anim d3">
+        <span class="chip">세종대학교 전공직무박람회 총괄</span>
+        <span class="chip">봄축제 &lt;세종연회&gt; 부스기획팀장</span>
+      </div>
+      <div class="idx"><b>05</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 06 · CASE 01 -->
+  <section data-label="Case 01">
+    <div class="frame case" data-screen-label="06 Case 01">
+      <div class="ctop">
+        <div class="eyebrow anim">Case 01 · 행사 기획·운영</div>
+        <h2 class="anim d1">5,000명의 니즈를 <span class="hl">현실로</span></h2>
+        <div class="meta anim d1">2025 세종대학교 전공직무박람회 · 총괄 운영 (대학교육국장)</div>
+      </div>
+      <div class="body">
+        <div class="metrics anim d2">
+          <div class="metric"><div class="mv">5,000명</div><div class="ml">역대 최대 참여 규모</div></div>
+          <div class="metric"><div class="mv">+40%</div><div class="ml">전년 대비 참여 증가</div></div>
+          <div class="metric"><div class="mv">0건</div><div class="ml">운영·안전 사고</div></div>
+        </div>
+        <div class="rcsr anim d3">
+          <div class="blk"><div class="blk-k">Role</div><div class="blk-v">프로젝트 총괄 기획 및 현장 운영 리딩</div></div>
+          <div class="blk"><div class="blk-k">Challenge</div><div class="blk-v">형식적인 정보 전달식 행사의 낮은 참여도와 고착화된 구성</div></div>
+          <div class="blk"><div class="blk-k">Solution</div><div class="blk-v">전교생 니즈 데이터 분석으로 <span class="em">'실무자와 소통' 중심</span>의 박람회 재구성. 학생 동선·몰입도를 고려한 공간 큐레이션 도입</div></div>
+          <div class="blk"><div class="blk-k">Result</div><div class="blk-v">유관 부서 3곳·대행사와 <span class="em">실시간 크로스체크</span>로 무사고 운영. <span class="mute">성과는 정보 흐름의 안정성에서 나온다는 것을 체득</span></div></div>
+        </div>
+      </div>
+      <div class="idx"><b>06</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 07 · CASE 02 -->
+  <section data-label="Case 02">
+    <div class="frame case" data-screen-label="07 Case 02">
+      <div class="ctop">
+        <div class="eyebrow anim">Case 02 · 공간 기획·운영</div>
+        <h2 class="anim d1">축제의 중심이 된 <span class="hl">부스 기획</span></h2>
+        <div class="meta anim d1">2025 세종대학교 봄축제 &lt;세종연회&gt; · 부스기획팀장</div>
+      </div>
+      <div class="body">
+        <div class="metrics anim d2">
+          <div class="metric"><div class="mv">+25%</div><div class="ml">동일 면적 대비 부스 수용력</div></div>
+          <div class="metric"><div class="mv">손실 0</div><div class="ml">폭우 긴급 철수 시 물품 손실</div></div>
+        </div>
+        <div class="rcsr anim d3">
+          <div class="blk"><div class="blk-k">Role</div><div class="blk-v">부스 배치 전략 수립 및 현장 레이아웃 설계</div></div>
+          <div class="blk"><div class="blk-k">Challenge</div><div class="blk-v">한정된 교내 부지에 전년 대비 증가한 참가 수요를 수용해야 하는 공간 제약</div></div>
+          <div class="blk"><div class="blk-k">Solution</div><div class="blk-v">방문객 동선 시뮬레이션으로 공간을 재설계, 유효 면적 분석으로 <span class="em">데드 스페이스 최소화</span> 및 병목 방지 동선 가이드 설계</div></div>
+          <div class="blk"><div class="blk-k">Result</div><div class="blk-v">축제 3일 차 <span class="em">폭우로 인한 긴급 철수</span> 상황에서도 기록·크로스체크 기반으로 렌탈 물품 손실 없이 안정적으로 정리</div></div>
+        </div>
+      </div>
+      <div class="idx"><b>07</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 08 · PILLAR 02 -->
+  <section data-label="Pillar 02">
+    <div class="frame divider" data-screen-label="08 Pillar 02">
+      <div class="pillnum">02</div>
+      <div class="eyebrow anim">What I bring · 02</div>
+      <div class="motif anim d1">노력을 멈추지 않는</div>
+      <h2 class="anim d2"><span class="hl">데이터 분석</span> 및 마케팅 능력</h2>
+      <div class="uses anim d3">
+        <span class="chip">오래오랩 서포터즈 6기 · 마케팅 에디터</span>
+      </div>
+      <div class="idx"><b>08</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 09 · CASE 03 -->
+  <section data-label="Case 03">
+    <div class="frame case" data-screen-label="09 Case 03">
+      <div class="ctop">
+        <div class="eyebrow anim">Case 03 · 데이터 · 콘텐츠 마케팅</div>
+        <h2 class="anim d1">데이터로 증명한 <span class="hl">타겟 마케팅</span></h2>
+        <div class="meta anim d1">오래오랩 서포터즈 6기 · 마케팅 에디터 (2025.01 – 03)</div>
+      </div>
+      <div class="body">
+        <div class="metrics anim d2">
+          <div class="metric"><div class="mv">기수 1위</div><div class="ml">발행 콘텐츠 최고 조회수</div></div>
+          <div class="metric"><div class="mv">우수 에디터</div><div class="ml">최종 우수 활동자 선정</div></div>
+          <div class="metric"><div class="mv">5건</div><div class="ml">데이터 기반 반복 발행</div></div>
+        </div>
+        <div class="rcsr anim d3">
+          <div class="blk"><div class="blk-k">Overview</div><div class="blk-v">건강한 식습관 브랜드의 인지도·유입 확대를 위한 디지털 콘텐츠 기획·발행</div></div>
+          <div class="blk"><div class="blk-k">Targeting</div><div class="blk-v">기존 콘텐츠 성과 데이터를 역추적해 독자가 필요로 하는 <span class="em">'정보의 공백'</span>을 파악</div></div>
+          <div class="blk"><div class="blk-k">Execution</div><div class="blk-v">검색 유입 키워드를 헤드라인에 배치하고 모바일 최적화 가독성을 설계해 체류 시간 극대화</div></div>
+          <div class="blk"><div class="blk-k">Insight</div><div class="blk-v"><span class="em">독자가 듣고 싶은 정보</span>를 가공해 전달할 때 진정한 마케팅이 시작된다는 것을 체득</div></div>
+        </div>
+      </div>
+      <div class="idx"><b>09</b> / 10</div>
+    </div>
+  </section>
+
+  <!-- 10 · CLOSING -->
+  <section data-label="Closing">
+    <div class="frame closing" data-screen-label="10 Closing">
+      <div class="eyebrow anim">Outro</div>
+      <p class="quote anim d1">“ 관성을 깨는 <span class="hl">호기심</span>,<br>현장을 완성하는 <span class="hl">집요함</span> ”</p>
+      <p class="qsub anim d2">새로움을 발견해 내는 호기심으로, <em>브랜드의 목소리를 가장 입체적인 공간의 경험으로 완성하는 기획자</em>가 되겠습니다.</p>
+      <div class="cc anim d3">
+        <a href="tel:+821073751819"><span class="ico">Phone</span>010-7375-1819</a>
+        <a href="mailto:rockdae365@gmail.com"><span class="ico">Email</span>rockdae365@gmail.com</a>
+      </div>
+      <span class="neon-ring cl-ring anim d2" aria-hidden="true"></span>
+      <div class="footline">조영채 · Portfolio 2026</div>
+      <div class="idx"><b>10</b> / 10</div>
+    </div>
+  </section>
+
+</deck-stage>
+<script src="deck-stage.js"></script>
+
+<!-- ===== Tweaks panel ===== -->
+<div id="tweak-root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const { useEffect } = React;
+
+const PORTFOLIO_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#3FEFC9",
+  "theme": "dark"
+}/*EDITMODE-END*/;
+
+const ACCENTS = {
+  "#3FEFC9": "rgba(63,239,201,.16)",
+  "#45E0FF": "rgba(69,224,255,.16)",
+  "#8C7BFF": "rgba(140,123,255,.16)",
+  "#7CF06E": "rgba(124,240,110,.16)"
+};
+
+const THEMES = {
+  dark: {
+    "--bg":"#000000","--surface":"#0C1311","--surface-2":"#0F1815",
+    "--line":"#1E2A27","--line-soft":"#131C19",
+    "--text":"#EAF5F2","--muted":"#7E8C88","--muted-2":"#48544F"
+  },
+  light: {
+    "--bg":"#F4F1EA","--surface":"#EAE6DC","--surface-2":"#E3DED2",
+    "--line":"#D8D2C4","--line-soft":"#E2DCCF",
+    "--text":"#1A1815","--muted":"#6E6A60","--muted-2":"#A39E91"
+  }
+};
+
+function PortfolioTweaks() {
+  const [t, setTweak] = useTweaks(PORTFOLIO_TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const theme = THEMES[t.theme] || THEMES.dark;
+    Object.entries(theme).forEach(([k, v]) => root.style.setProperty(k, v));
+    root.style.setProperty("--accent", t.accent);
+    root.style.setProperty("--accent-soft", ACCENTS[t.accent] || "rgba(198,160,106,.14)");
+  }, [t.accent, t.theme]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection label="포인트 컬러" />
+      <TweakColor label="Accent" value={t.accent}
+        options={Object.keys(ACCENTS)}
+        onChange={(v) => setTweak('accent', v)} />
+      <TweakSection label="테마" />
+      <TweakRadio label="Theme" value={t.theme}
+        options={['dark', 'light']}
+        onChange={(v) => setTweak('theme', v)} />
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweak-root')).render(<PortfolioTweaks />);
+</script>
+</body>
+</html>
